@@ -41,6 +41,17 @@
         android:value="${APP_CHANNEL}" />
         <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="G9qg9E5p0TgIgqLigvpsoMyIQcBbVGDC"/>
 
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            />
+
     </application>
 
 </manifest>

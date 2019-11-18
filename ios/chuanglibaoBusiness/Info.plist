@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>团美家商户版test</string>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,8 +24,26 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1.0</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>wechat</string>
+		<string>weixin</string>
+	</array>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx88c53e1f1d36ff1f</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1.1.0</string>
 	<key>CodePushDeploymentKey</key>
@@ -39,6 +57,8 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>是否允许此App访问您的媒体资料库？</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>是否同意此App访问您的蓝牙，用于连接蓝牙打印机？</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>是否同意此App访问您的蓝牙，用于连接蓝牙打印机？</string>
 	<key>NSCalendarsUsageDescription</key>

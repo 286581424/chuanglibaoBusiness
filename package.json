@@ -59,6 +59,7 @@
     "react-native-tab-navigator": "^0.3.4",
     "react-native-view-shot": "^2.5.0",
     "react-native-webview-richeditor": "^1.0.0",
+    "react-native-wechat": "^1.9.12",
     "react-navigation": "^2.18.0"
   },
   "devDependencies": {

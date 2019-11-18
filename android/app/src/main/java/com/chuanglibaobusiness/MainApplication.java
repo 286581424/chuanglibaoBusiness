@@ -3,6 +3,7 @@ package com.chuanglibaobusiness;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.theweflex.react.WeChatPackage;
 import org.lovebing.reactnative.baidumap.BaiduMapPackage;
 import com.horcrux.svg.SvgPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new WeChatPackage(),
             new BaiduMapPackage(getApplicationContext()),
             new SvgPackage(),
             new ExtraDimensionsPackage(),

@@ -157,6 +157,124 @@ export default class NetUtils extends Component{
             alert(error);
         });
     };
+
+    /**
+     * post json形式  header为'Content-Type': 'application/json'
+     * @param {*} url 
+     * @param {*} service 
+     * @param {*} jsonObj 
+     * @param {*} callback 
+     */
+    static postJson_backErr(Interface,jsonObj,params,callback,errBack,errorBack){
+      let str = '&equipment=app'
+      if (params == '') {
+        str = '?equipment=app'
+      }
+        fetch(url+Interface+params+str,{
+        method:'POST',
+        headers:{
+          'Accept': 'application/json;charset=utf-8',
+          'Content-Type': 'application/json;',
+        },
+        body:JSON.stringify(jsonObj),//json对象转换为string
+        })
+        .then((response) => response.json())
+        .then((responseBody) => {
+            if(responseBody.flag == true){
+                callback(responseBody.data);
+            }else{
+                //否则不正确，则进行消息提示
+                let err = '服务器繁忙，请稍候再试'
+                if (responseBody.errMsg != null) {
+                  err = responseBody.errMsg
+                }
+                errBack(err)
+            }
+        }).catch(error => {
+            errorBack(error)
+        });
+    };
+
+    /**
+     * 日期加一天
+     */
+    static getTimeAddOneDay(date){
+        var space = "-";
+        var dateTime=new Date();
+        if(date!=''){
+          dateTime = new Date(date);
+        }
+        dateTime = dateTime.setDate(dateTime.getDate()+1);
+        dateTime = new Date(dateTime);
+        console.log(dateTime.getDate())
+        var years = dateTime.getFullYear();
+        var months = dateTime.getMonth()+1;
+        if(months<10){
+            months = "0"+months;
+        }
+ 
+        var days = dateTime.getDate();
+        if(days<10){
+            days = "0"+days;
+        }
+
+        var hours = dateTime.getHours();
+        if(hours<10){
+            hours = "0"+hours;
+        }
+ 
+        var mins = dateTime.getMinutes(); 
+        if(mins<10){
+            mins = "0"+mins;
+        }
+ 
+        var secs = dateTime.getSeconds();
+        if(secs<10){
+            secs = "0"+secs;
+        }
+
+        var time = years+space+months+space+days;
+        return time;
+    };
+
+    /**
+     * 获取vip到期时间 yyyy-MM-dd +30天
+     */
+    static getExpireTime(){
+        var space = ".";
+        var dateTime=new Date();
+        dateTime = dateTime.setDate(dateTime.getDate()+30);
+        dateTime = new Date(dateTime);
+        console.log(dateTime.getDate())
+        var years = dateTime.getFullYear();
+        var months = dateTime.getMonth()+1;
+        if(months<10){
+            months = "0"+months;
+        }
+ 
+        var days = dateTime.getDate();
+        if(days<10){
+            days = "0"+days;
+        }
+
+        var hours = dateTime.getHours();
+        if(hours<10){
+            hours = "0"+hours;
+        }
+ 
+        var mins =dateTime.getMinutes(); 
+        if(mins<10){
+            mins = "0"+mins;
+        }
+ 
+        var secs = dateTime.getSeconds();
+        if(secs<10){
+            secs = "0"+secs;
+        }
+
+        var time = years+space+months+space+days;
+        return time;
+    };
  
     /**
      * 获取当前系统时间 yyyyMMddHHmmss

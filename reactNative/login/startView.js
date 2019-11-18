@@ -67,7 +67,21 @@ import province from '../PublicComponents/province'
 import city from '../PublicComponents/city'
 import area from '../PublicComponents/area'
 import townOrStreet from '../PublicComponents/townOrStreet'
+
+import marketCategory from '../index/Homes/MarketCategory/marketCategory'
+import toBeVip from '../index/Homes/MarketCategory/toBeVip'
+import vipPrivilege from '../index/Homes/MarketCategory/vipPrivilege'
+import vipProfit from '../index/Homes/MarketCategory/vipProfit'
+import vipAgreement from '../index/Homes/MarketCategory/vipAgreement'
+import marketOrderList from '../index/Homes/MarketCategory/marketOrderList'
+import payResult from '../index/Homes/MarketCategory/payResult'
+import placeOrder from '../index/Homes/MarketCategory/placeOrder'
+import profitWithdrawal from '../index/Homes/MarketCategory/profitWithdrawal'
+import payment from '../index/Homes/MarketCategory/payment'
+import marketOrderDetails from '../index/Homes/MarketCategory/marketOrderDetails'
+
 import JPushModule from 'jpush-react-native';
+import *as wechat from 'react-native-wechat';
 
 var environmental = 0;  //0为生产环境，1为测试环境
 var CODE_PUSH_PRODUCTION_KEY = ''
@@ -173,7 +187,7 @@ class start extends Component {
                                 }
                                 this.saveOperateType(operate_type);
                                 this.saveBusinessID(responseBody.data.userBusinessInfo.id);
-                                navigate(nextView,{key:nextView});
+                                this.props.navigation.replace(nextView,{key:nextView});
                               }else{
                                 if (responseBody.errMsg == 'token is error') {
                                     Alert.alert('提示','用户已在别的设备登录，请重新登录',[{text:'确认',onPress:() => this._gotoLoginView(navigate)}]);
@@ -185,7 +199,7 @@ class start extends Component {
                               alert(error);
                           });
                         }else{
-                          navigate(nextView,{key:nextView});
+                          this.props.navigation.replace(nextView,{key:nextView});
                         }
                 }
             },1000);
@@ -195,7 +209,7 @@ class start extends Component {
       if (!this.state.isUpdata) {
         this.setState({loadingShow:false});
       }
-      navigate('login',{key:'login'});
+      this.props.navigation.replace('login',{key:'login'});
     }
 
   saveOperateType(value){
@@ -220,6 +234,7 @@ class start extends Component {
     this.setState({checkLoadShow:true})
     this.loadPhone();
     this.loadToken();
+    wechat.registerApp('wx88c53e1f1d36ff1f')
     JPushModule.initPush()
     let os = Platform.OS;
     if (os === 'ios') {
@@ -674,6 +689,72 @@ const index = StackNavigator({
         header: null,
       }
     },
+    marketCategory: {
+      screen: marketCategory,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    toBeVip: {
+      screen: toBeVip,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    vipPrivilege: {
+      screen: vipPrivilege,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    vipProfit: {
+      screen: vipProfit,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    vipAgreement: {
+      screen: vipAgreement,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    marketOrderList: {
+      screen: marketOrderList,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    payResult: {
+      screen: payResult,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    placeOrder: {
+      screen: placeOrder,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    profitWithdrawal: {
+      screen: profitWithdrawal,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    payment: {
+      screen: payment,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    marketOrderDetails: {
+      screen: marketOrderDetails,
+      navigationOptions:{
+        header: null,
+      }
+    },
     labelSetting: {
       screen: labelSetting,
       navigationOptions:{
@@ -683,7 +764,7 @@ const index = StackNavigator({
   },
   {    
     navigationOptions: {
-      gesturesEnabled: false
+      gesturesEnabled: true
     }
   }
 );

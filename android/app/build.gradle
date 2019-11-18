@@ -165,6 +165,7 @@ allprojects {
 }
 
 dependencies {
+    implementation project(':react-native-wechat')
     implementation project(':react-native-baidu-map')
     implementation project(':react-native-svg')
     implementation project(':react-native-extra-dimensions-android')
