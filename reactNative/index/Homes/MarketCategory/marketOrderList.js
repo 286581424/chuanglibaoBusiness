@@ -170,12 +170,31 @@ export default class marketOrderList extends Component {
         status = '其他'
         break;
     }
+    if (item.status == 5) {
+      switch(item.pay_status){
+        case 4:
+          status = '退款申请中'
+          break;
+        case 5:
+          status = '退款申请中'
+          break;
+        case 6:
+          status = '退款成功'
+          break;
+        case 7:
+          status = '退款失败'
+          break;
+        default:
+          status = '其他'
+          break;
+      }
+    }
     return (
               <View style={{width:ScreenUtils.scaleSize(705),overflow:'hidden',borderRadius:ScreenUtils.scaleSize(20),backgroundColor:'white',justifyContent:'center',alignItems:'center'}}>
                 <View style={{width:ScreenUtils.scaleSize(705),height:ScreenUtils.scaleSize(84),flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                  <Text style={{width:ScreenUtils.scaleSize(525),fontSize:ScreenUtils.setSpText(8),color:'black'}}>订单编号：{item.order_num}</Text>
-                  <TouchableOpacity onPress={() => this.gotoOrderDetails(item)} style={{flexDirection:'row',width:ScreenUtils.scaleSize(140),height:ScreenUtils.scaleSize(84),alignItems:'center',justifyContent:'flex-end'}}>
-                    <Text>{status}</Text>
+                  <Text style={{width:ScreenUtils.scaleSize(495),fontSize:ScreenUtils.setSpText(8),color:'black'}}>订单编号：{item.order_num}</Text>
+                  <TouchableOpacity onPress={() => this.gotoOrderDetails(item)} style={{flexDirection:'row',width:ScreenUtils.scaleSize(170),height:ScreenUtils.scaleSize(84),alignItems:'center',justifyContent:'flex-end'}}>
+                    <Text style={{fontSize:ScreenUtils.setSpText(8),color:'black'}}>{status}</Text>
                     <View style={{width:ScreenUtils.scaleSize(10)}}></View>
                     <Image source={require('../../images/Market/more.png')} style={{width:ScreenUtils.scaleSize(16),height:ScreenUtils.scaleSize(32)}} />
                   </TouchableOpacity>

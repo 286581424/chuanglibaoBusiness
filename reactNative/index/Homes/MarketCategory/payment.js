@@ -16,6 +16,7 @@ import {
   NativeModules,
   Modal,
   ImageBackground,
+  DeviceEventEmitter
 } from 'react-native';
 import ScreenUtils from '../../../PublicComponents/ScreenUtils';
 import NetUtils from '../../../PublicComponents/NetUtils';
@@ -73,6 +74,7 @@ export default class payment extends Component {
         // 如果找到数据，则在then方法中返回
         this.setState({token:ret},() => {
           this.getBalance()
+          this.checkHasPayPwd()
           const { params } = this.props.navigation.state
           this.setState({params:params})
           this.getOrderDetails(params)
@@ -97,11 +99,20 @@ export default class payment extends Component {
     this.setState({params:params})
     this.getOrderDetails(params)
     this.getBalance()
+    this.checkHasPayPwd()
     if (params.key=='placeOrder') {
       this.setState({payType:0})
     }else{
       this.setState({payType:1})
     }
+  }
+
+  //检查是否有支付密码
+  checkHasPayPwd(){
+    let str = '?userType=B&token=' + this.state.token[1]
+    NetUtils.get('market/user/checkHasPP', str, (result) => {
+      this.setState({hasPayPwd:result})
+    });
   }
 
   //查询账户余额
@@ -202,6 +213,20 @@ export default class payment extends Component {
     if (params.key=='placeOrder') {
       this.setState({payType:0})
     }
+    //支付密码设置成功返回监听
+    this.deEmitter = DeviceEventEmitter.addListener('setPayPwdSuccess', (a) => {
+        this.checkHasPayPwd()
+    });
+  }
+
+  payFail(i){
+    if (i == 0) {
+      this.setState({payLoading:false})
+      DeviceEventEmitter.emit('pwdErrorListeners','')
+    }else{
+      this._setPaypwdShow()
+      this.setState({payLoading:false})
+    }
   }
 
   //支付中
@@ -216,9 +241,10 @@ export default class payment extends Component {
   }
 
   //支付
-  gotoPay(){
+  gotoPay(value){
     const { params } = this.state;
     this.setState({isCanPay:false})
+    this.setState({payLoading:true})
     if (!this.state.isCanPay) {
        setTimeout(() => {
         this.setState({isCanPay:true})
@@ -240,13 +266,21 @@ export default class payment extends Component {
         payment = 2
       }
       let str = '?userType=B&token=' + this.state.token[1] + '&orderNum=' + this.state.orderNum + '&payment=' + payment
-      NetUtils.get('market/order/pay', str, (result) => {
+      if (payment == 4) {
+        str += '&payPassword=' + value
+      }
+      console.log(str)
+      NetUtils.postJson_backErr('market/order/pay', {} ,str, (result) => {
         if(payment == 4){
+          this._setPaypwdShow()
           this.goToPayResult()
           this.setState({isCanPay:true})
         }else{
           this.wechatPay(result)
         }
+      },(errorRes) => {
+          Alert.alert('提示',errorRes,[{text:'确定',onPress:() => this.payFail(0)}])
+          this.setState({isCanPay:true})
       });
     }
   }
@@ -310,6 +344,15 @@ export default class payment extends Component {
     //返回上一页时清空计时器，以免出现错误
     this.timer && clearTimeout(this.timer);
     goBack()
+  }
+
+  checkPayPwd(){
+    const { navigate } = this.props.navigation;
+    if (this.state.payType==0 && !this.state.hasPayPwd) {
+      Alert.alert('提示','暂未设置支付密码，是否马上设置？',[{text:'是',onPress:() => navigate('paymentPwd',{mobile:this.state.phone,hasPayPassword:false,nextView:'payment'})},{text:'否'}])
+    }else{
+      this._setPaypwdShow()
+    }
   }
 
     render() {
@@ -384,7 +427,7 @@ export default class payment extends Component {
                   <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(125),alignItems:'center'}}>
                     {this.state.balance-this.state.total_price<0 && this.state.canBalancePay && this.state.payType == 0?<TouchableOpacity onPress={() => this.goToBeVip(navigate,params)} style={{width:ScreenUtils.scaleSize(703),height:ScreenUtils.scaleSize(90),backgroundColor:'#434343',justifyContent:'center',alignItems:'center',borderRadius:ScreenUtils.scaleSize(10)}}>
                       <Text style={{fontSize:ScreenUtils.setSpText(9),color:'white'}}>余额不足，点击前往充值</Text>
-                    </TouchableOpacity>:<TouchableOpacity onPress={() => this.gotoPay()} style={{width:ScreenUtils.scaleSize(703),height:ScreenUtils.scaleSize(90),backgroundColor:'#fea712',justifyContent:'center',alignItems:'center',borderRadius:ScreenUtils.scaleSize(10)}}>
+                    </TouchableOpacity>:<TouchableOpacity onPress={() => this.state.payType==1?this.gotoPay():this.checkPayPwd()} style={{width:ScreenUtils.scaleSize(703),height:ScreenUtils.scaleSize(90),backgroundColor:'#fea712',justifyContent:'center',alignItems:'center',borderRadius:ScreenUtils.scaleSize(10)}}>
                       <Text style={{fontSize:ScreenUtils.setSpText(9),color:'white'}}>支付 ¥ {this.state.total_price}</Text>
                     </TouchableOpacity>}
                   </View>
@@ -405,10 +448,10 @@ export default class payment extends Component {
                             </View>
                             <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(1),backgroundColor:'#EEEEEE'}}></View>
                             <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(80),justifyContent:'center',alignItems:'center'}}>
-                              <Text style={{fontSize:ScreenUtils.setSpText(12),fontWeight:'700',color:'red'}}>¥ {this.state.money}</Text>
+                              <Text style={{fontSize:ScreenUtils.setSpText(12),fontWeight:'700',color:'red'}}>¥ {this.state.total_price}</Text>
                             </View>
                             <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(100),flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                              <PaymentInput width={550} height={80} value='' callback={(value) => this._paymentCallback(value)}/>
+                              <PaymentInput width={550} height={80} value='' callback={(value) => this.gotoPay(value)}/>
                             </View>
                             {this.renderPayLoading()}
                           </View>

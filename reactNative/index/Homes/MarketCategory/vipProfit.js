@@ -128,7 +128,7 @@ export default class vipProfit extends Component {
     this.loadToken()
     //底部导航栏点击监听
     this.deEmitter = DeviceEventEmitter.addListener('vipProfitListener', (a) => {
-        // this.loadToken()
+        this.loadToken()
         this.setState({chooseList:[]})
     });
   }
@@ -320,7 +320,8 @@ export default class vipProfit extends Component {
     if (this.state.isVip == 1) {
       return (
                 <View>
-                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(299),backgroundColor:'black',justifyContent:'center',alignItems:'center'}}>
+                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(this.state.statusBarHeight),backgroundColor:'black'}}></View>
+                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(259),backgroundColor:'black',justifyContent:'center',alignItems:'center'}}>
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                       <Image source={{uri:this.state.head_portrait}} style={{width:ScreenUtils.scaleSize(126),height:ScreenUtils.scaleSize(119),borderRadius:ScreenUtils.scaleSize(60)}} />
                       <View style={{width:ScreenUtils.scaleSize(16)}}></View>
@@ -332,7 +333,7 @@ export default class vipProfit extends Component {
                     </View>
                   </View>
 
-                  <View style={{position:'absolute',top:ScreenUtils.scaleSize(299-62),width:ScreenUtils.scaleSize(750),height:ScreenUtils.getHeight()-ScreenUtils.scaleSize(299+110-62),alignItems:'center'}}>
+                  <View style={{position:'absolute',top:ScreenUtils.scaleSize(259+this.state.statusBarHeight-62),width:ScreenUtils.scaleSize(750),height:ScreenUtils.getHeight()-ScreenUtils.scaleSize(299+110-62),alignItems:'center'}}>
                     <ImageBackground source={require('../../images/Market/vip_profit_bgimg.png')} style={{width:ScreenUtils.scaleSize(706),height:ScreenUtils.scaleSize(124),flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                       <Text style={{width:ScreenUtils.scaleSize(509),fontSize:ScreenUtils.setSpText(9),color:'black'}}>会员到期时间：{this.state.vipDeadline}</Text>
                       {/* 判断vip是否过期，过期显示续费，未过期显示提现 */}

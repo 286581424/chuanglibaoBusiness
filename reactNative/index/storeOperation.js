@@ -15,7 +15,7 @@ import {
 import ScreenUtils from '../PublicComponents/ScreenUtils';
 import NetUtils from '../PublicComponents/NetUtils';
 
-var btnArray = [{title:'商品管理',img:require('./images/MenDian/commodity.png')},{title:'消息中心',img:require('./images/MenDian/message.png')},{title:'用户评价',img:require('./images/MenDian/pingjia.png')},{title:'二维码管理',img:require('./images/MenDian/qrcode.png')},{title:'财务对账',img:require('./images/MenDian/caiwu.png')},{title:'推文列表',img:require('./images/MenDian/tuiwen.png')},{title:'规格设置',img:require('./images/MenDian/guige.png')},{title:'商品属性',img:require('./images/MenDian/shuxing.png')},{title:'采购商品',img:require('./images/MenDian/shuxing.png')}];
+var btnArray = [{title:'商品管理',img:require('./images/MenDian/commodity.png')},{title:'消息中心',img:require('./images/MenDian/message.png')},{title:'用户评价',img:require('./images/MenDian/pingjia.png')},{title:'二维码管理',img:require('./images/MenDian/qrcode.png')},{title:'财务对账',img:require('./images/MenDian/caiwu.png')},{title:'推文列表',img:require('./images/MenDian/tuiwen.png')},{title:'规格设置',img:require('./images/MenDian/guige.png')},{title:'商品属性',img:require('./images/MenDian/shuxing.png')},{title:'采购商品',img:require('./images/MenDian/cailanzi.png')}];
 
 export default class storeOperation extends Component {
 

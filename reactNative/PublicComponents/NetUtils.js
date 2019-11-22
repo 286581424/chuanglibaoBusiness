@@ -202,7 +202,9 @@ export default class NetUtils extends Component{
         var space = "-";
         var dateTime=new Date();
         if(date!=''){
-          dateTime = new Date(date);
+          date = date.replace(/-/g,':').replace(' ',':');
+          date = date.split(':');
+          dateTime = new Date(date[0],(date[1]-1),date[2]);
         }
         dateTime = dateTime.setDate(dateTime.getDate()+1);
         dateTime = new Date(dateTime);

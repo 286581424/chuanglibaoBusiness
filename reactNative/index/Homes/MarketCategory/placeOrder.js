@@ -295,7 +295,7 @@ export default class placeOrder extends Component {
                       <Text style={{color:'#fea712',width:ScreenUtils.scaleSize(150),height:ScreenUtils.scaleSize(30)}}></Text>
                     </View>
                   </View>
-                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(300-88-this.state.statusBarHeight),backgroundColor:'#fea712'}}>
+                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(300-88-30),backgroundColor:'#fea712'}}>
                   </View>
 
                   {/* 购物车列表 */}

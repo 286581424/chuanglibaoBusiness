@@ -381,6 +381,16 @@ export default class shopSeting extends Component {
                     </TouchableOpacity>
                   </View>
 
+                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(5),backgroundColor:'#EEEEEE'}}></View>
+
+                   <View style={{flexDirection:'row',width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(94),backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{width:ScreenUtils.scaleSize(690/2-200),fontSize:ScreenUtils.setSpText(8),color:'black'}}>支付密码</Text>
+                    <Text style={{width:ScreenUtils.scaleSize(480),textAlign:'right',color:'gray',fontSize:ScreenUtils.setSpText(8)}}></Text>
+                    <TouchableOpacity onPress={() => navigate('paymentPwd',{mobile:this.state.mobile,hasPayPassword:false})} style={{width:ScreenUtils.scaleSize(690/2-280),height:ScreenUtils.scaleSize(70),justifyContent:'center',alignItems:'flex-end'}}>
+                      <Image resizeMode={'stretch'} source={require('../images/shopSecond/shop_second_more.png')} style={{width:ScreenUtils.scaleSize(14*1.3),height:ScreenUtils.scaleSize(25*1.3)}}/>
+                    </TouchableOpacity>
+                  </View>
+
             </ScrollView>
         );
     }

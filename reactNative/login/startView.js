@@ -48,6 +48,7 @@ import shopKeyword from '../index/personalCenter/shopKeyword';
 import shopPhoneNum from '../index/personalCenter/shopPhoneNum';
 import businessAddress from '../index/personalCenter/businessAddress';
 import shopSeting from '../index/personalCenter/shopSeting';
+import paymentPwd from '../index/personalCenter/paymentPwd'
 import printSetting from '../index/personalCenter/printSetting'
 import printInfo from '../index/personalCenter/printInfo'
 import registerBusinessQualification from '../login/registerBusinessQualification';
@@ -415,6 +416,12 @@ const index = StackNavigator({
     },
     homepage: {
       screen: homepage,
+      navigationOptions:{
+        header: null,
+      }
+    },
+    paymentPwd: {
+      screen: paymentPwd,
       navigationOptions:{
         header: null,
       }

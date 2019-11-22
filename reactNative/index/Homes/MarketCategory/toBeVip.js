@@ -184,13 +184,13 @@ export default class toBeVip extends Component {
         //如果前一个页面是‘placeOrder’，则要把city area buyCarList等信息传到下一页，以便支付成功后返回页面
         if (params.goBackView!=null && params.goBackView == 'placeOrder') {
           //canBalancePay 不能用余额支付 tipsText 提示语
-          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:vipMoney+money,invalid_time:result.InvalidTime,goBackView:'placeOrder',city:params.city,area:params.area,buyCarList:params.buyCarList,returnCash:params.returnCash,totalPrice:params.totalPrice})
+          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:money,invalid_time:result.InvalidTime,goBackView:'placeOrder',city:params.city,area:params.area,buyCarList:params.buyCarList,returnCash:params.returnCash,totalPrice:params.totalPrice})
         }else if (params.goBackView!=null && params.goBackView == 'payment'){
           //canBalancePay 不能用余额支付 tipsText 提示语
-          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:vipMoney+money,invalid_time:result.InvalidTime,goBackView:'payment',order_num:params.orderNum})
+          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:money,invalid_time:result.InvalidTime,goBackView:'payment',order_num:params.orderNum})
         }else{
           //canBalancePay 不能用余额支付 tipsText 提示语
-          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:vipMoney+money,invalid_time:result.InvalidTime})
+          navigate('payment',{key:'toBeVip',tipsText:'开通团美家VIP会员',canBalancePay:false,orderNum:result.orderNum,total_price:money,invalid_time:result.InvalidTime})
         }
       });
     }else if (title == '续费团美家VIP') {

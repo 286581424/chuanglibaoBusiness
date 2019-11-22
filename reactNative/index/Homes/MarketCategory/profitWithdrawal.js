@@ -117,12 +117,15 @@ export default class profitWithdrawal extends Component {
   }
 
   _getBankCardList(){
-    let str = '?mobile=' + this.state.phone + '&token=' + this.state.token[1] + '&user_member_info_id=0&user_business_info_id=0&user_type=M';
-    NetUtils.get('memberAccount/getMemberAccountByUserId', str, (result) => {
-        this.setState({bankCardList:result.memberAccountList});
-        console.log(result.memberAccountList)
-        if(result.memberAccountList.length > 0){
-          this.setState({chooseBank:result.memberAccountList[0]})
+    let str = '?mobile='+this.state.phone+'&token='+this.state.token[1];
+    NetUtils.get('business/findBusinessAccount', str, (result) => {
+        let list = []
+        if (result!=null) {
+          list.push(result)
+        }
+        if(list.length > 0){
+          this.setState({bankCardList:list});
+          this.setState({chooseBank:list[0]})
         }
     });
   }
@@ -200,7 +203,7 @@ export default class profitWithdrawal extends Component {
     let str = '?userType=B&token=' + this.state.token[1]
     NetUtils.get('user/balance', str, (result) => {
       let tips = '余额提现成功，当前余额为'+result+'元'
-      Alert.alert('提示',tips,[{text:'确定',onPress:() => goBackView()}])
+      Alert.alert('提示',tips,[{text:'确定',onPress:() => this.goBackView()}])
     });
   }
 
@@ -301,7 +304,8 @@ export default class profitWithdrawal extends Component {
   )
 
   //返回上一页
-  goBackView(goBack){
+  goBackView(){
+    const { goBack } = this.props.navigation;
     DeviceEventEmitter.emit('vipProfitListener','')
     goBack()
   }
@@ -346,7 +350,7 @@ export default class profitWithdrawal extends Component {
                 </View>
 
                   <View style={{backgroundColor:'#fea712',flexDirection:'row',width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(88),alignItems:'center'}}>
-                    <TouchableOpacity onPress={() => this.goBackView(goBack)} style={{width:ScreenUtils.scaleSize(100),height:ScreenUtils.scaleSize(50),justifyContent:'center',alignItems:'center'}}>
+                    <TouchableOpacity onPress={() => this.goBackView()} style={{width:ScreenUtils.scaleSize(100),height:ScreenUtils.scaleSize(50),justifyContent:'center',alignItems:'center'}}>
                       <Image resizeMode={'stretch'} style={{width:ScreenUtils.scaleSize(19),height:ScreenUtils.scaleSize(36)}} source={require('../../images/Home/back_white.png')}/>
                     </TouchableOpacity>
                     <Text style={{color:'white',fontSize:ScreenUtils.setSpText(10),left:ScreenUtils.scaleSize(50),width:ScreenUtils.scaleSize(450),textAlign:'center'}}>{this.state.title}</Text>
@@ -354,7 +358,7 @@ export default class profitWithdrawal extends Component {
                       <Text style={{color:'black',width:ScreenUtils.scaleSize(150),height:ScreenUtils.scaleSize(30)}}></Text>
                     </View>
                   </View>
-                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(450-88-this.state.statusBarHeight),backgroundColor:'#fea712',alignItems:'center'}}>
+                  <View style={{width:ScreenUtils.scaleSize(750),height:ScreenUtils.scaleSize(450-88-40),backgroundColor:'#fea712',alignItems:'center'}}>
                     <View style={{height:ScreenUtils.scaleSize(14)}}></View>
                     <Text style={{fontSize:ScreenUtils.setSpText(26),fontWeight:'500',color:'#ffffff'}}>{this.state.money}</Text>
                     <View style={{height:ScreenUtils.scaleSize(21)}}></View>
